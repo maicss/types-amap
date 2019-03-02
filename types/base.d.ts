@@ -216,10 +216,11 @@ export class Map extends EventBindable {
 
 }
 
-type mapEventNames =
+type AllEventNames =
     'change'
     | 'click'
     | 'close'
+    | 'choose'
     | 'complete'
     | 'dblclick'
     | 'dragstart'
@@ -230,6 +231,7 @@ type mapEventNames =
     | 'hotspotout'
     | 'hide'
     | 'mapmove'
+    | 'markerClick'
     | 'mousemove'
     | 'mousewheel'
     | 'mouseover'
@@ -240,16 +242,20 @@ type mapEventNames =
     | 'moveend'
     | 'moving'
     | 'movealong'
+    | 'listElementClick'
     | 'open'
     | 'resize'
     | 'rightclick'
     | 'show'
+    | 'select'
+    | 'selectChanged'
     | 'touchstart'
     | 'touchmove'
     | 'touchend'
     | 'zoomchange'
     | 'zoomstart'
     | 'zoomend'
+    | 'error'
 
 export class View2D {
     /**
@@ -273,19 +279,19 @@ export class View2D {
 }
 
 declare abstract class EventBindable {
-    on(eventName: mapEventNames, callback: EventCallback, context?: object): void;
+    on(eventName: AllEventNames, callback: EventCallback, context?: object): void;
 
     off(eventName: string, callback: EventCallback, context?: object): void;
 
-    addDomListener(instance: Map, eventName: mapEventNames, handler: EventCallback, context?: object): EventListener
+    addDomListener(instance: Map, eventName: AllEventNames, handler: EventCallback, context?: object): EventListener
 
-    addListener(instance: Map, eventName: mapEventNames, handler: EventCallback, context?: object): EventListener
+    addListener(instance: Map, eventName: AllEventNames, handler: EventCallback, context?: object): EventListener
 
-    addListenerOnce(instance: Map, eventName: mapEventNames, handler: EventCallback, context?: object): EventListener
+    addListenerOnce(instance: Map, eventName: AllEventNames, handler: EventCallback, context?: object): EventListener
 
-    removeListener(eventName: mapEventNames): void
+    removeListener(eventName: AllEventNames): void
 
-    trigger(instance: Map, eventName: mapEventNames, extArgs: any): void
+    trigger(instance: Map, eventName: AllEventNames, extArgs: any): void
 }
 
 export class ArrayBounds {

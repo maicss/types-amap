@@ -45,24 +45,18 @@ interface TileLayerOptions {
     detectRetina?: boolean
 }
 
-
-export class TileLayer extends Layer {
-    constructor(tileOption: TileLayerOptions);
-}
-
-interface TrafficLayerOption extends TileLayerOptions {
+interface TrafficLayerOptions extends TileLayerOptions {
     autoRefresh?: Boolean
     interval?: number
 }
 
-export class TileLayerTraffic extends TileLayer {
-    constructor(TrafficLayerOption: TrafficLayerOption)
+interface FlexibleLayerOptions extends TileLayerOptions {
+    createTile(x: number, y: number, z: number, success: () => void, fail: () => void): void
+
+    cacheSize: number,
 }
 
-export class TileLayerRoadNet extends TileLayer {
-}
-
-interface massMarksOption extends TileLayerOptions {
+interface massMarksOptions {
     cursor?: string
     alwaysRender?: boolean
     style?: MassStyleObject | Array<MassStyleObject>
@@ -83,11 +77,127 @@ interface MassMarksData {
     [key: string]: any
 }
 
-export class TileLayerMassMarks extends TileLayer {
+export class MassMarks {
     /**
      * @description 创建海量点类。data为点对象的数组，点对象为包含经纬度lnglat属性的Object，opts为点与点集合的绘制样式。
      例data: [{lnglat: [116.405285, 39.904989], name: i,id:1},{}, …]或url串，支持从服务器直接取数据*/
-    constructor(data: Array<MassMarksData>, massMarksOption: massMarksOption)
+    constructor(data: Array<MassMarksData>, massMarksOption: massMarksOptions)
+}
+
+interface BuildingsOptions {
+    zooms?: [number, number],
+    opacity?: number,
+    heightFactor?: number,
+    visible?: boolean,
+    map: Map,
+    zIndex?: number
+}
+
+/** @since 1.4.6*/
+export class Buildings {
+    constructor(buildingsOptions: BuildingsOptions)
+
+    setMap(map: Map | null): void
+
+    show(): void
+
+    hide(): void
+
+    setStyle(options: object): void
+}
+
+interface ImageLayerOptions {
+    bounds: Bounds
+    url: string
+    visible?: boolean
+}
+
+export class ImageLayer {
+    constructor(imageLayerOptions: ImageLayerOptions)
+
+    getMap(): Map
+
+    getBounds(): Bounds
+
+    setBounds(bounds: Bounds): void
+
+    getzIndex(): number
+
+    getElement(): HTMLCanvasElement
+
+    setImageUrl(url: string): void
+
+    getImageUrl(): string
+}
+
+interface VideoLayerOptions {
+    url: string | string[]
+    map: Map
+    bounds: Bounds
+    autoplay?: boolean
+    loop?: boolean
+    opacity?: number
+    visible?: boolean
+    zIndex?: number
+    zooms?: [number, number]
+}
+
+export class VideoLayer {
+    constructor(videoOptions: VideoLayerOptions)
+
+    setMap(map: Map | null): void
+
+    getMap(): Map
+
+    show(): void
+
+    hide(): void
+
+    setzIndex(zindex: number): void
+
+    getzIndex(): number
+
+    getElement(): HTMLVideoElement
+
+    setVideoUrl(url: string | string[]): void
+
+    getVideoUrl(): string
+}
+
+interface CanvasLayerOptions {
+    map: Map
+    canvas: HTMLCanvasElement
+    bounds: Bounds
+    opacity?: number
+    visible?: boolean
+    zIndex?: number
+    zooms?: [number, number]
+}
+
+export class CanvasLayer {
+    constructor(canvasLayerOptions: CanvasLayerOptions)
+
+    reFresh(): void
+
+    setMap(map: Map | null): void
+
+    getMap(): Map
+
+    show(): void
+
+    hide(): void
+
+    setzIndex(zindex: number): void
+
+    getzIndex(): number
+
+    getElement(): HTMLCanvasElement
+
+    setCanvas(HTMLCanvasElement): void
+}
+
+export class TileLayer extends Layer {
+    constructor(tileOption: TileLayerOptions)
 }
 
 export class TileLayerGroup {
@@ -118,101 +228,24 @@ export class TileLayerGroup {
     hide(): void
 }
 
-interface BuildingsOptions {
-    zooms?: [number, number],
-    opacity?: number,
-    heightFactor?: number,
-    visible?: boolean,
-    map: Map,
-    zIndex?: number
-}
+export namespace TileLayer {
+    class Traffic extends TileLayer {
+        constructor(trafficLayerOption: TrafficLayerOptions)
+    }
 
-/** @since 1.4.6*/
-export class Buildings {
-    constructor(buildingsOptions: BuildingsOptions)
+    class RoadNet extends TileLayer {
+        constructor(roadNetOption: TileLayerOptions)
+    }
 
-    setMap(map: Map | null): void
+    class Flexible extends TileLayer {
+        constructor(flexibleLayerOptions: FlexibleLayerOptions)
 
-    show(): void
+        getzIndex(): number
 
-    hide(): void
+        getMap(): Map
+    }
 
-    setStyle(options: object): void
-}
-
-interface FlexibleLayerOptions extends TileLayerOptions {
-    createTile(x: number, y: number, z: number, success: () => void, fail: () => void): void
-
-    cacheSize: number,
-
-}
-
-export class TileLayerFlexible extends TileLayer {
-    constructor(flexibleLayerOptions: FlexibleLayerOptions)
-
-    getzIndex(): number
-
-    getMap(): Map
-}
-
-interface ImageLayerOptions extends TileLayerOptions {
-    bounds: Bounds
-    url: string
-    visible: boolean
-}
-
-export class TileLayerImageLayer extends TileLayer {
-    constructor(imageLayerOptions: ImageLayerOptions)
-
-    getMap(): Map
-
-    getBounds(): Bounds
-
-    setBounds(bounds: Bounds): void
-
-    getzIndex(): number
-
-    getElement(): HTMLCanvasElement
-
-    setImageUrl(url: string): void
-
-    getImageUrl(): string
-}
-
-interface VideoLayerOptions extends TileLayerOptions {
-    autoplay: boolean
-    loop: boolean
-    bounds: Bounds
-    url: string | string[]
-    visible: boolean
-}
-
-export class TileLayerVideoLayer extends TileLayer {
-    constructor(videoPlayerOption: VideoLayerOptions)
-
-    getMap(): Map
-
-    getzIndex(): number
-
-    getElement(): HTMLVideoElement
-
-    setVideoUrl(url: string | string[]): void
-
-    getVideoUrl(): string
-}
-
-interface CanvasLayerOptions extends TileLayerOptions {
-    bounds: Bounds
-    canvas: HTMLCanvasElement
-    visible: boolean
-}
-
-export class TileLayerCanvasLayer extends TileLayer {
-    reFresh(): void
-
-    getzIndex(): number
-
-    getElement(): HTMLCanvasElement
-
-    setCanvas(canvas: HTMLCanvasElement): void
+    class Satellite extends TileLayer {
+        constructor(satelliteOptions: TileLayerOptions)
+    }
 }

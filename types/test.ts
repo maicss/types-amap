@@ -1,10 +1,8 @@
 import AMAP from './index'
 
-const marker = new AMAP.Marker()
+const map = new AMAP.Map('', {})
 
-type aa = number[][] | number[]
+const marker = new AMAP.Marker({map})
 
-const bb: aa = [[11]]
-const cc: aa = [11, 22]
+const traffic = new AMAP.TileLayer.Traffic({map,})
 
-;[].forEach

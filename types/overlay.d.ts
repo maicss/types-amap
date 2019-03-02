@@ -1,6 +1,6 @@
 import {Bounds, EventBindable, LngLat, Map, Pixel, shortPositions, Size} from "./base"
 
-type anchorPositions =
+export type anchorPositions =
     'top-left'
     | 'top-center'
     | 'top-right'
