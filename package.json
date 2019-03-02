@@ -1,0 +1,24 @@
+{
+  "name": "types-amap",
+  "version": "0.0.1",
+  "description": "amap API in `.d.ts`",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maicss/type-amap.git"
+  },
+  "keywords": [
+    "types",
+    "amap",
+    "typescript"
+  ],
+  "author": "maicss",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maicss/type-amap/issues"
+  },
+  "homepage": "https://github.com/maicss/type-amap#readme"
+}

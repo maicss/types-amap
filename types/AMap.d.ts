@@ -1,7 +1,6 @@
 import {
     Marker,
     Polygon,
-    GeoJSONOptions,
     GeoJSON,
     GroundImage,
     OverlayGroup,
@@ -58,8 +57,6 @@ export {
     Size,
     IndoorMap,
     View2D,
-    plugin,
-    service,
     Polyline,
     ElasticMarker,
     MarkerShape,
@@ -74,10 +71,18 @@ export {
     OverlayGroup,
     GroundImage,
     GeoJSON,
-    GeoJSONOptions,
     Polygon,
+    Geocode,
+    TileLayer,
+    VideoLayer,
+    MassMarks,
+    ImageLayer,
+    CanvasLayer,
+    Buildings,
+    TileLayerGroup,
 
-
+    plugin,
+    service,
     isRingInRing,
     ringRingClip,
     ringArea,
@@ -103,15 +108,5 @@ export {
     closestOnSegment,
     closestOnLine,
     isClockwise,
-
     convertFrom,
-    Geocode,
-    TileLayer,
-    VideoLayer,
-    MassMarks,
-    ImageLayer,
-    CanvasLayer,
-    Buildings,
-    TileLayerGroup,
-
 }

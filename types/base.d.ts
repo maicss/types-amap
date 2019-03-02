@@ -138,7 +138,7 @@ type availablePluginNames =
     | 'AMap.Heatmap'
     | 'AMap.CustomLayer'
 
-export function plugin(pluginNames: availablePluginNames[], ready?: () => void): void;
+export function plugin(pluginNames: availablePluginNames | availablePluginNames[], ready?: (...args: any[]) => void): void;
 
 type availableServiceNames = 'movie' | 'hotel'
 

@@ -197,7 +197,7 @@ export class CanvasLayer {
 }
 
 export class TileLayer extends Layer {
-    constructor(tileOption: TileLayerOptions)
+    constructor(tileLayerOptions: TileLayerOptions)
 }
 
 export class TileLayerGroup {
@@ -230,11 +230,11 @@ export class TileLayerGroup {
 
 export namespace TileLayer {
     class Traffic extends TileLayer {
-        constructor(trafficLayerOption: TrafficLayerOptions)
+        constructor(trafficLayerOptions: TrafficLayerOptions)
     }
 
     class RoadNet extends TileLayer {
-        constructor(roadNetOption: TileLayerOptions)
+        constructor(roadNetOptions: TileLayerOptions)
     }
 
     class Flexible extends TileLayer {
