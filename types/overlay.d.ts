@@ -37,6 +37,10 @@ interface markerOptions {
     shape?: MarkerShape
     extData?: any
     label?: { content?: string, offset?: { x: number, y: number } }
+}
+
+export class Marker extends EventBindable {
+    constructor(markerOptions: markerOptions)
 
     markOnAMAP(obj: { name: string, position?: LngLat }): void
 
@@ -123,11 +127,6 @@ interface markerOptions {
     getExtData(): any
 }
 
-export class Marker extends EventBindable {
-    constructor(markerOptions: markerOptions)
-
-}
-
 export class Icon {
     constructor(size: Size, imageOffset: Pixel, image: string, imageSize: Size)
 
@@ -137,32 +136,35 @@ export class Icon {
 }
 
 export class MarkerShape {
-    constructor()
+    constructor(markerShapeOptions: {
+        coords: number[]
+        type: 'circle' | 'poly' | 'rect'
+    })
 
 }
 
 interface ElasticMarkerOptions {
+    map: Map,
+    position: LngLat,
     styles?: {
         icon: {
             img: string,
-            size: [number, number],
-            ancher: [number, number],
+            size?: [number, number],
+            ancher?: [number, number],
             imageOffset?: [number, number]
-            fitZoom: number
+            fitZoom?: number
             imageSize?: [number, number]
-            scaleFactor: number,
-            minScale: number
+            scaleFactor?: number,
+            minScale?: number
         }
         label: {
             content: string
             position?: shortPositions
-            offset: [number, number]
-            minZoom: number
+            offset?: [number, number]
+            minZoom?: number
         }
     }[],
     zoomStyleMapping?: object,
-    map: Map,
-    position: LngLat,
     topWhenClick?: boolean,
     bubble?: boolean,
     draggable?: boolean,
@@ -319,6 +321,7 @@ export class Text extends EventBindable {
 
 interface PolylineOptions {
     map: Map
+    path: LngLat[]
     zIndex?: number
     bubble?: boolean
     cursor?: string
@@ -326,7 +329,6 @@ interface PolylineOptions {
     isOutline?: boolean
     borderWeight?: number
     outlineColor?: string
-    path?: LngLat[]
     strokeColor?: string
     strokeOpacity?: number
     strokeWeight?: number
@@ -366,6 +368,362 @@ export class Polyline extends EventBindable {
 
 }
 
+interface PolygonOptions {
+    map: Map
+    path: LngLat[] | LngLat[][]
+    zIndex?: number
+    bubble?: boolean
+    cursor?: string
+    strokeColor?: string
+    strokeOpacity?: number
+    strokeWeight?: number
+    fillColor?: string
+    fillOpacity?: number
+    draggable?: number
+    extData?: any
+    strokeStyle?: string
+    strokeDasharray?: number[]
+}
 export class Polygon extends EventBindable {
+    constructor(polygonOptions: PolylineOptions)
+
+    setPath(path: LngLat[] | LngLat[][]): void
+
+    getPath(): LngLat[] | LngLat[][]
+
+    setOptions(opt: PolygonOptions): void
+
+    getOptions(): object
+
+    getBounds(): Bounds
+
+    getArea(): number
+
+    hide(): void
+
+    show(): void
+
+    setMap(map: Map | null): void
+
+    setExtData(extData: any): void
+
+    getExtData(): any
+
+    contains(point: LngLat): boolean
+}
+
+interface BezierCurveOptions {
+    path: LngLat[] | LngLat[][]
+    map: Map
+    strokeColor?: string
+    strokeOpacity?: number
+    strokeWeight?: number
+    strokeStyle?: 'dashed' | 'solid'
+    strokeDasharray?: number[]
+    zIndex?: number
+    showDir?: boolean
+    bubble?: boolean
+    cursor?: string
+    isOutline?: boolean
+    outlineColor?: string
+    borderWeight?: number
+}
+
+export class BezierCurve extends EventBindable {
+    constructor(bezierCurveOptions: BezierCurveOptions)
+
+    setPath(path: LngLat[] | LngLat[][]): void
+
+    getPath(): LngLat[] | LngLat[][]
+
+    setOptions(opt: PolylineOptions): void
+
+    getOptions(): BezierCurveOptions
+
+    getLength(): number
+
+    getBounds(): Bounds
+
+    hide(): void
+
+    show(): void
+
+    setMap(map: Map | null): void
+
+    setExtData(extData: any): void
+
+    getExtData(): any
+}
+
+interface CircleOptions {
+    map: Map
+    center: LngLat
+    radius: number
+    zIndex: number
+    bubble?: boolean
+    cursor?: string
+    strokeColor?: string
+    strokeOpacity?: number
+    strokeWeight?: number
+    fillColor?: string
+    fillOpacity?: number
+    strokeStyle?: 'solid' | 'dashed'
+    extData?: any
+    strokeDasharray?: number[]
+}
+
+export class Circle extends EventBindable {
+    constructor(circleOptions: CircleOptions)
+
+    setCenter(lnglat: LngLat): void
+
+    getCenter(): LngLat
+
+    getBounds(): Bounds
+
+    setRadius(radius: number): void
+
+    getRadius(): number
+
+    setOptions(opt: CircleOptions): void
+
+    getOptions(): CircleOptions
+
+    hide(): void
+
+    show(): void
+
+    setMap(map: Map | null): void
+
+    setExtData(extData: any): void
+
+    getExtData(): any
+
+    contains(point: LngLat): boolean
+}
+
+interface CircleMarkerOptions {
+    map: Map
+    center: LngLat
+    radius: number
+    zIndex?: number
+    bubble?: boolean
+    strokeColor?: string
+    strokeOpacity?: number
+    strokeWeight?: number
+    fillColor?: string
+    fillOpacity?: number
+    extData?: any
+}
+
+export class CircleMarker extends EventBindable {
+    constructor(circleMarkerOptions: CircleMarkerOptions)
+
+    setCenter(lnglat: LngLat): void
+
+    getCenter(): LngLat
+
+    setRadius(radius: number): void
+
+    getRadius(): number
+
+    setOptions(opt: CircleMarkerOptions): void
+
+    getOptions(): CircleMarkerOptions
+
+    hide()
+
+    show()
+
+    setMap(map: Map | null): void
+
+    setExtData(extData: any): void
+
+    getExtData(): any
+}
+
+interface EllipseOptions {
+    map: Map
+    center: LngLat
+    radius?: [number, number]
+    zIndex?: number
+    bubble?: boolean
+    cursor?: string
+    strokeColor?: string
+    strokeOpacity?: number
+    strokeWeight?: number
+    fillColor?: string
+    fillOpacity?: number
+    strokeStyle?: string
+    extData?: any
+    strokeDasharray?: number[]
+}
+
+export class Ellipse extends EventBindable {
+    getCenter(): LngLat
+
+    setCenter(lnglat: LngLat): void
+
+    getBounds(): Bounds
+
+    setOptions(opts: EllipseOptions): void
+
+    getOptions(): EllipseOptions
+
+    hide()
+
+    show()
+
+    setMap(map: Map | null): void
+
+    setExtData(extData: any): void
+
+    getExtData(): any
+
+    contains(point: LngLat): boolean
+}
+
+interface RectangleOptions {
+    map: Map
+    bounds: Bounds
+    zIndex?: number
+    bubble?: boolean
+    cursor?: string
+    strokeColor?: string
+    strokeOpacity?: number
+    strokeWeight?: number
+    fillColor?: string
+    fillOpacity?: number
+    strokeStyle?: string
+    extData?: any
+    strokeDasharray?: number[]
+}
+
+export class Rectangle extends EventBindable {
+    constructor(rectangleOptions: RectangleOptions)
+
+    getBounds(): Bounds
+
+    setBounds(bounds: Bounds): void
+
+    setOptions(opts: RectangleOptions): void
+
+    getOptions(): RectangleOptions
+
+    hide(): void
+
+    show(): void
+
+    setMap(map: Map | null)
+
+    setExtData(extData: any): void
+
+    getExtData(): any
+
+    contains(point: LngLat): boolean
+}
+
+type availOverlayGroupType = Marker | Polygon | Polyline | Circle | Rectangle | Ellipse | BezierCurve
+
+export class OverlayGroup extends EventBindable {
+    constructor(overlayGroupOptions: availOverlayGroupType[])
+
+    addOverlay(overlay: availOverlayGroupType): void
+
+    addOverlays(overlays: availOverlayGroupType[]): void
+
+    getOverlays(): availOverlayGroupType[]
+
+    hasOverlay(overlay: availOverlayGroupType): boolean
+
+    removeOverlay(overlay: availOverlayGroupType): void
+
+    removeOverlays(overlays: availOverlayGroupType[]): void
+
+    clearOverlays(): void
+
+    eachOverlay(iterator: (availOverlayGroupType, index: number, collections: availOverlayGroupType[]) => void): void
+
+    setMap(map: Map): void
+
+    setOptions(opts: availOverlayGroupType[]): void
+
+    show(): void
+
+    hide(): void
+}
+
+interface GeoJSONOptions {
+    geoJSON: object
+
+    getMarker?: (geojson: object, lnglat: LngLat) => void
+    getPolyline?: (geojson: object, lnglat: LngLat) => void
+    getPolygon?: (geojson: object, lnglat: LngLat) => void
+}
+
+export class GeoJSON extends EventBindable {
+    constructor(geojsonOptions: GeoJSONOptions)
+
+    importData(geoJSON: object): void
+
+    toGeoJSON(): object
+
+    addOverlay(overlay: availOverlayGroupType): void
+
+    addOverlays(overlays: availOverlayGroupType[]): void
+
+    getOverlays(): availOverlayGroupType[]
+
+    hasOverlay(overlay: availOverlayGroupType): boolean
+
+    removeOverlay(overlay: availOverlayGroupType): void
+
+    removeOverlays(overlays: availOverlayGroupType[]): void
+
+    clearOverlays(): void
+
+    eachOverlay(iterator: (availOverlayGroupType, index: number, collections: availOverlayGroupType[]) => void): void
+
+    setMap(map: Map): void
+
+    show(): void
+
+    hide(): void
+}
+
+export class GroundImage extends EventBindable {
+    constructor(groundImageOptions: {
+        map: Map
+        clickable?: boolean
+        opacity?: number
+    })
+
+    getMap(): Map
+
+    setMap(map: Map): void
+
+    getOpacity(): number
+
+    setOpacity(opacity: number): void
+
+    getBounds(): Bounds
+
+    getImageUrl(): string
+}
+
+export class ContextMenu extends EventBindable {
+    constructor(contextMenuOptions: {
+        position: LngLat
+        content: string | HTMLElement
+        width?: number
+    })
+
+    addItem(text: string, fn: Function, num: number)
+
+    removeItem(text: string, fn: Function): void
+
+    open(map: Map, position: LngLat): void
+
+    close(): void
 
 }

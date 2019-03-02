@@ -216,10 +216,45 @@ export class Map extends EventBindable {
 
 }
 
+type mapEventNames =
+    'change'
+    | 'click'
+    | 'close'
+    | 'complete'
+    | 'dblclick'
+    | 'dragstart'
+    | 'dragging'
+    | 'dragend'
+    | 'hotspotclick'
+    | 'hotspotover'
+    | 'hotspotout'
+    | 'hide'
+    | 'mapmove'
+    | 'mousemove'
+    | 'mousewheel'
+    | 'mouseover'
+    | 'mouseout'
+    | 'mouseup'
+    | 'mousedown'
+    | 'movestart'
+    | 'moveend'
+    | 'moving'
+    | 'movealong'
+    | 'open'
+    | 'resize'
+    | 'rightclick'
+    | 'show'
+    | 'touchstart'
+    | 'touchmove'
+    | 'touchend'
+    | 'zoomchange'
+    | 'zoomstart'
+    | 'zoomend'
+
 export class View2D {
     /**
      * @param opt {object}
-     * @param [opt.center] {AMAP.LngLat}
+     * @param [opt.center] {LngLat}
      * @param [opt.rotation] {number}
      * @param [opt.zoom] {number}
      * @param [opt.crs=EPSG3857] {{'EPSG3857'|'EPSG3395'|'EPSG4326'}}
@@ -237,35 +272,6 @@ export class View2D {
     toString(): string;
 }
 
-type mapEventNames =
-    'complete'
-    | 'click'
-    | 'dblclick'
-    | 'mapmove'
-    | 'hotspotclick'
-    | 'hotspotover'
-    | 'hotspotout'
-    | 'movestart'
-    | 'moveend'
-    | 'zoomchange'
-    | 'zoomstart'
-    | 'zoomend'
-    | 'mousemove'
-    | 'mousewheel'
-    | 'mouseover'
-    | 'mouseout'
-    | 'mouseup'
-    | 'mousedown'
-    | 'rightclick'
-    | 'dragstart'
-    | 'dragging'
-    | 'dragend'
-    | 'resize'
-    | 'moving'
-    | 'touchstart'
-    | 'touchmove'
-    | 'touchend'
-
 declare abstract class EventBindable {
     on(eventName: mapEventNames, callback: EventCallback, context?: object): void;
 
@@ -282,3 +288,8 @@ declare abstract class EventBindable {
     trigger(instance: Map, eventName: mapEventNames, extArgs: any): void
 }
 
+export class ArrayBounds {
+    constructor(bounds: LngLat[] | Pixel[])
+
+    contains(point: LngLat | Pixel): boolean
+}

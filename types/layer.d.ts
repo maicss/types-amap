@@ -1,6 +1,6 @@
 import {Bounds, EventBindable, LngLatObj, Map, Pixel, Size} from "./base"
 
-abstract class Layer extends EventBindable {
+declare abstract class Layer extends EventBindable {
     setOpacity(alpha: number): void;
 
     show(): void;
@@ -46,7 +46,7 @@ interface TileLayerOptions {
 }
 
 
-class TileLayer extends Layer {
+export class TileLayer extends Layer {
     constructor(tileOption: TileLayerOptions);
 }
 
@@ -55,11 +55,11 @@ interface TrafficLayerOption extends TileLayerOptions {
     interval?: number
 }
 
-class TileLayerTraffic extends TileLayer {
+export class TileLayerTraffic extends TileLayer {
     constructor(TrafficLayerOption: TrafficLayerOption)
 }
 
-class TileLayerRoadNet extends TileLayer {
+export class TileLayerRoadNet extends TileLayer {
 }
 
 interface massMarksOption extends TileLayerOptions {
@@ -83,14 +83,14 @@ interface MassMarksData {
     [key: string]: any
 }
 
-class TileLayerMassMarks extends TileLayer {
+export class TileLayerMassMarks extends TileLayer {
     /**
      * @description 创建海量点类。data为点对象的数组，点对象为包含经纬度lnglat属性的Object，opts为点与点集合的绘制样式。
      例data: [{lnglat: [116.405285, 39.904989], name: i,id:1},{}, …]或url串，支持从服务器直接取数据*/
     constructor(data: Array<MassMarksData>, massMarksOption: massMarksOption)
 }
 
-class TileLayerGroup {
+export class TileLayerGroup {
     constructor(layers: TileLayer[])
 
     addLayer(layer: TileLayer): void
@@ -128,7 +128,7 @@ interface BuildingsOptions {
 }
 
 /** @since 1.4.6*/
-class Buildings {
+export class Buildings {
     constructor(buildingsOptions: BuildingsOptions)
 
     setMap(map: Map | null): void
@@ -147,7 +147,7 @@ interface FlexibleLayerOptions extends TileLayerOptions {
 
 }
 
-class TileLayerFlexible extends TileLayer {
+export class TileLayerFlexible extends TileLayer {
     constructor(flexibleLayerOptions: FlexibleLayerOptions)
 
     getzIndex(): number
@@ -161,7 +161,7 @@ interface ImageLayerOptions extends TileLayerOptions {
     visible: boolean
 }
 
-class TileLayerImageLayer extends TileLayer {
+export class TileLayerImageLayer extends TileLayer {
     constructor(imageLayerOptions: ImageLayerOptions)
 
     getMap(): Map
@@ -187,7 +187,7 @@ interface VideoLayerOptions extends TileLayerOptions {
     visible: boolean
 }
 
-class TileLayerVideoLayer extends TileLayer {
+export class TileLayerVideoLayer extends TileLayer {
     constructor(videoPlayerOption: VideoLayerOptions)
 
     getMap(): Map
@@ -207,7 +207,7 @@ interface CanvasLayerOptions extends TileLayerOptions {
     visible: boolean
 }
 
-class TileLayerCanvasLayer extends TileLayer {
+export class TileLayerCanvasLayer extends TileLayer {
     reFresh(): void
 
     getzIndex(): number
