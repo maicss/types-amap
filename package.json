@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maicss/type-amap.git"
+    "url": "git+https://github.com/maicss/types-amap.git"
   },
   "keywords": [
     "types",
@@ -18,7 +18,7 @@
   "author": "maicss",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/maicss/type-amap/issues"
+    "url": "https://github.com/maicss/types-amap/issues"
   },
-  "homepage": "https://github.com/maicss/type-amap#readme"
+  "homepage": "https://github.com/maicss/types-amap#readme"
 }

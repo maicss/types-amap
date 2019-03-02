@@ -1,1 +1,1 @@
-amap API `.d.ts`
+amap API interface by Typescript
