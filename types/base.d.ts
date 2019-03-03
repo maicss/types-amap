@@ -1,4 +1,5 @@
-import {TileLayer} from './layer'
+import {Layer, TileLayer} from './layer'
+import {Circle, Marker, Polygon, Polyline} from "./overlay"
 
 export type shortPositions = 'BL'|'BM'|'BR'|'ML'|'MR'|'TL'|'TM'|'TR'
 
@@ -183,37 +184,155 @@ export class IndoorMap {
 }
 
 interface MapOptions {
-    view?: View2D;
-    layers?: TileLayer[];
-    level?: number;
-    center?: LngLat;
-    labelzIndex?: number;
-    zooms?: number[];
-    lang?: string;
-    cursor?: string;
-    crs?: string;
-    animateEnable?: boolean;
-    isHotspot?: boolean;
-    defaultLayer?: TileLayer;
-    rotateEnable?: boolean;
-    resizeEnable?: boolean;
-    showIndoorMap?: boolean;
-    indoorMap?: IndoorMap;
-    expandZoomRange?: boolean;
-    dragEnable?: boolean;
-    zoomEnable?: boolean;
-    doubleClickZoom?: boolean;
-    keyboardEnable?: boolean;
-    jogEnable?: boolean;
-    scrollWheel?: boolean;
-    touchZoom?: boolean;
-    mapStyle?: string;
-    features?: string[];
+    view?: View2D
+    layers?: TileLayer[]
+    zoom?: number
+    center?: LngLat
+    labelzIndex?: number
+    zooms: [number, number]
+    lang?: 'zh_cn' | 'en'
+    defaultCursor?: string
+    crs?: 'EPSG3857' | 'EPSG3395' | 'EPSG4326'
+    animateEnable?: boolean
+    isHotspot?: boolean
+    defaultLayer?: TileLayer
+    rotateEnable?: boolean
+    resizeEnable?: boolean
+    showIndoorMap?: boolean
+    indoorMap?: IndoorMap
+    expandZoomRange?: boolean
+    dragEnable?: boolean
+    zoomEnable?: boolean
+    doubleClickZoom?: boolean
+    keyboardEnable?: boolean
+    jogEnable?: boolean
+    scrollWheel?: boolean
+    touchZoom?: boolean
+    touchZoomCenter?: number
+    mapStyle?: string
+    features?: 'bg' | 'point' | 'road' | 'building'[]
+    showBuildingBlock?: boolean
+    viewMode?: '2D' | '3D'
+    pitch?: number
+    pitchEnable?: boolean
+    buildingAnimation?: boolean
+    skyColor?: string
+    preloadMode?: boolean
+    mask?: number[] | number[][] | number[][][]
 }
 
 export class Map extends EventBindable {
     constructor(container: string | HTMLDivElement, mapOptions: MapOptions)
 
+    poiOnAMAP(obj: { id: string, name: string, location: LngLat }): void
+
+    detailOnAMAP(obj: { id: string, name: string, location: LngLat }): void
+
+    getZoom(): number
+
+    getLayers(): TileLayer[]
+
+    getCenter(): LngLat
+
+    getContainer(): HTMLDivElement
+
+    getCity(callback: ({province, city, citycode, district}: { province: string, city: string, citycode: string, district: string }) => void): void
+
+    getBounds(): Bounds
+
+    getLabelzIndex(): number
+
+    getLimitBounds(): Bounds
+
+    getLang(): 'zh_cn' | 'en'
+
+    getSize(): Size
+
+    getRotation(): number
+
+    getStatus(): { [key: string]: boolean }
+
+    getDefaultCursor(): string
+
+    getResolution(point: LngLat): number
+
+    getScale(dpi: number): number
+
+    setZoom(level: number)
+
+    setlabelzIndex(index: number): void
+
+    setLayers(layers: TileLayer[]): void
+
+    add(layers: Layer[]): void
+
+    remove(layers: Layer[])
+
+    getAllOverlays(type: 'marker' | 'circle' | 'polyline' | 'polygon'): Marker | Polygon | Circle | Polyline[]
+
+    setCenter(position: LngLat): void
+
+    setZoomAndCenter(zoomLevel: number, center: LngLat): void
+
+    setCity(city: string, callback?: (...args: any[]) => void): void
+
+    setBounds(bound: Bounds): void
+
+    setLimitBounds(bound: Bounds): void
+
+    clearLimitBounds(): void
+
+    setLang(lang: string): string
+
+    setRotation(rotation: number): number
+
+    setStatus(status: { [key: string]: boolean }): void
+
+    setDefaultCursor(cursor: string): void
+
+    zoomIn(): void
+
+    zoomOut(): void
+
+    panTo(position: LngLat): void
+
+    panBy(x: number, y: number): void
+
+    setFitView(overlayList: Layer[] | null, immediately: boolean, avoid: [number, number, number, number], maxZoom: number): void
+
+    clearMap(): void
+
+    destroy(): void
+
+    plugin(name: string | availablePluginNames, callback: (...args: any[]) => void): void
+
+    addControl(obj: object): void
+
+    removeControl(obj: object): void
+
+    clearInfoWindow(): void
+
+    pixelToLngLat(pixel: Pixel, level: number): LngLat
+
+    lnglatToPixel(lngLat: LngLat, level: number): Pixel
+
+    containerToLngLat(pixel: Pixel): LngLat
+
+    lngLatToContainer(lnglat: LngLat): Pixel
+
+    setMapStyle(style: string): void
+
+    getMapStyle(): string
+
+    setFeatures(feature: 'bg' | 'point' | 'road' | 'building'): void
+
+    getFeatures(): 'bg' | 'point' | 'road' | 'building'[]
+
+    setDefaultLayer(layer: TileLayer): void
+
+    setPitch(pitch: number): void
+
+    getPitch(): number
 }
 
 type AllEventNames =

@@ -1,2 +1,3 @@
-import * as AMAP from './types/AMap'
-export default AMAP
+import * as AMap from './types/AMap'
+
+export default AMap
